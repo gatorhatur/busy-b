@@ -44,6 +44,7 @@ var getSchedule = function () {
 
 var saveSchedule = function (element, content) {
     // sched[element time].to-do = content
+    console.log("Schedule is being saved")
     localStorage.setItem(today, JSON.stringify(schedObj));
 };
 
@@ -93,6 +94,8 @@ var setSchedule = function () {
 
         contentEL.append(timeBlockEl);
     });
+
+    setToDoColors();
 };
 
 var initializeScheduleObject = function () {
@@ -119,7 +122,20 @@ var initializeScheduleObject = function () {
 
 //update colors of content area - this will also need to be done on an interval
 var setToDoColors = function () {
-    
+    var hour = dayjs().hour();
+    schedObj.forEach(function (element,index) {
+        var toDoEl = $("div[data-pos-id='" + index + "']");
+        //console.log(toDoEl);
+        if (index + 9 === hour) {
+            toDoEl.addClass("present");
+        }
+        else if (index + 9 < hour) {
+            toDoEl.addClass("past");
+        }
+        else {
+            toDoEl.addClass("future");
+        }
+    });
 };
 
 var toDoHandler = function (event) {
@@ -131,9 +147,13 @@ var toDoHandler = function (event) {
 ///Main code/////
 setToday();
 setSchedule();
+//listen for double click event to update text
 contentEL.on("dblclick", ".description", toDoHandler);
+//listn for click even on save button
 contentEL.on("click", ".saveBtn", saveSchedule);
-//handler for interaction, will need to determine what actions to take on click
+
+setInterval(setToDoColors, (1000 * 60) * 30);
+
 
 
 
