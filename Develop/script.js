@@ -6,7 +6,7 @@ var today = dayjs().format('dddd, MMMM Do');
 var schedObj = [];
 
 /*
-    sample schedule = [
+    sample schedule object = [
     {
     "time":  "9AM",
     "toDo": "Pay the bills"
@@ -49,6 +49,25 @@ var saveSchedule = function (element, content) {
 
 var setSchedule = function () {
     //when creating give the row a data-pos-id of its position in the array, this will make it easier to lookup later
+
+    //sample html
+    /*<div class="time-block row">
+
+            <div class="hour col-2">9 AM</div>
+            <div class="description col-8 present">Content</div>
+            <div class="saveBtn col-2">button</div>
+         
+        </div>
+
+        <div class="time-block row">
+
+          <div class="hour col-2">10AM</div>
+          <div class="description col-8 past" data-pos-id="1">Content</div>
+          <div class="saveBtn col-2"><span class="oi oi-book"></span></div>
+       
+      </div>*/
+    getSchedule();
+    
     schedObj.forEach(function (hourObj, index) {
 
         var timeBlockEl = $("<div>")
@@ -62,7 +81,7 @@ var setSchedule = function () {
         var toDoEl = $("<div>")
             .addClass("description col-8")
             .text(hourObj.toDo)
-            .attr("data-pos-id", index);
+            .attr("data-pos-id", index);//may not be needed since I am replicating the screen into the Obj
         timeBlockEl.append(toDoEl);
 
         var btnEl = $("<div>")
@@ -103,9 +122,16 @@ var setToDoColors = function () {
     
 };
 
+var toDoHandler = function (event) {
+    console.log(event.target);
+    console.log($(event.target).siblings());
+    
+}
 
 ///Main code/////
 setToday();
+setSchedule();
+contentEL.on("click", toDoHandler);
 //handler for interaction, will need to determine what actions to take on click
 
 
