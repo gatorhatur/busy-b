@@ -138,7 +138,11 @@ var setToDoColors = function () {
     });
 };
 
-var toDoHandler = function () {
+///Main code/////
+setToday();
+setSchedule();
+//listen for double click event to update text
+contentEL.on("click", ".description", function () {
     var text = $(this)
         .text()
         .trim();
@@ -147,16 +151,17 @@ var toDoHandler = function () {
         .addClass("form-control")
         .val(text);
     $(this).replaceWith(textInput);
-    console.log(text);
+    textInput.trigger("focus");
+    console.log(text);   
+});
 
+contentEL.on("change", ".description", function () {
+    var text = $(this)
+        .val()
+        .trim();
     
-}
-
-///Main code/////
-setToday();
-setSchedule();
-//listen for double click event to update text
-contentEL.on("click", ".description", toDoHandler);
+    //look at this closer
+});
 //listn for click even on save button
 contentEL.on("click", ".saveBtn", saveSchedule);
 //update colors every 30 minutes
