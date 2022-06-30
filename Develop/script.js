@@ -79,7 +79,7 @@ var setSchedule = function () {
             .text(hourObj.time);
         timeBlockEl.append(hourEl);
 
-        var toDoEl = $("<div>")
+        var toDoEl = $("<textarea>")
             .addClass("description col-8")
             .text(hourObj.toDo)
             .attr("data-pos-id", index);//may not be needed since I am replicating the screen into the Obj
@@ -124,7 +124,7 @@ var initializeScheduleObject = function () {
 var setToDoColors = function () {
     var hour = dayjs().hour();
     schedObj.forEach(function (element,index) {
-        var toDoEl = $("div[data-pos-id='" + index + "']");
+        var toDoEl = $("textarea[data-pos-id='" + index + "']");
         //console.log(toDoEl);
         if (index + 9 === hour) {
             toDoEl.addClass("present");
@@ -138,9 +138,17 @@ var setToDoColors = function () {
     });
 };
 
-var toDoHandler = function (event) {
-    console.log(event.target);
-    console.log($(event.target).siblings());
+var toDoHandler = function () {
+    var text = $(this)
+        .text()
+        .trim();
+    console.log(text);
+    var textInput = $(this)
+        .addClass("form-control")
+        .val(text);
+    $(this).replaceWith(textInput);
+    console.log(text);
+
     
 }
 
@@ -148,10 +156,10 @@ var toDoHandler = function (event) {
 setToday();
 setSchedule();
 //listen for double click event to update text
-contentEL.on("dblclick", ".description", toDoHandler);
+contentEL.on("click", ".description", toDoHandler);
 //listn for click even on save button
 contentEL.on("click", ".saveBtn", saveSchedule);
-
+//update colors every 30 minutes
 setInterval(setToDoColors, (1000 * 60) * 30);
 
 
