@@ -131,7 +131,8 @@ var toDoHandler = function (event) {
 ///Main code/////
 setToday();
 setSchedule();
-contentEL.on("dblclick", toDoHandler);
+contentEL.on("dblclick", ".description", toDoHandler);
+contentEL.on("click", ".saveBtn", saveSchedule);
 //handler for interaction, will need to determine what actions to take on click
 
 
