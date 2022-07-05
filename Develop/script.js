@@ -32,7 +32,7 @@ var getSchedule = function () {
     schedObj = localStorage.getItem(today);
 
     if (!schedObj) {
-        console.log("Nothing is currently stored for today!");
+        console.log("Nothing is currently stored for today! Building blank schedule...");
         schedObj = [];
         initializeScheduleObject();
     }
@@ -86,9 +86,11 @@ var setSchedule = function () {
         timeBlockEl.append(toDoEl);
 
         var btnEl = $("<div>")
-            .addClass("saveBtn col-2");
+            .addClass("saveBtn col-2 d-flex");
+        // var divEl = $("<div>")
+        //     .addClass("align-self-center");
         var spanEl = $("<span>")
-            .addClass("oi oi-book");
+            .addClass("oi oi-book m-auto");
         btnEl.append(spanEl);
         timeBlockEl.append(btnEl);
 
@@ -122,6 +124,8 @@ var initializeScheduleObject = function () {
 
 //update colors of content area - this will also need to be done on an interval
 var setToDoColors = function () {
+    var time = dayjs().format("HH:mm");
+    console.log("Updating colors -",time);
     var hour = dayjs().hour();
     schedObj.forEach(function (element,index) {
         var toDoEl = $("textarea[data-pos-id='" + index + "']");
@@ -144,23 +148,36 @@ setSchedule();
 //listen for double click event to update text
 contentEL.on("click", ".description", function () {
     var text = $(this)
-        .text()
+        .val()
         .trim();
-    console.log(text);
+
     var textInput = $(this)
         .addClass("form-control")
         .val(text);
     $(this).replaceWith(textInput);
     textInput.trigger("focus");
-    console.log(text);   
+
 });
+
 
 contentEL.on("change", ".description", function () {
     var text = $(this)
         .val()
         .trim();
     
+    var index = $(this)
+        .attr("data-pos-id");
+    
+    schedObj[index].toDo = text;
+    
+    console.log(schedObj);
     //look at this closer
+});
+
+
+contentEL.on("blur", ".description", function () {
+ $(this).removeClass("form-control")
+
 });
 //listn for click even on save button
 contentEL.on("click", ".saveBtn", saveSchedule);
