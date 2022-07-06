@@ -182,7 +182,7 @@ contentEL.on("blur", ".description", function () {
 //listn for click even on save button
 contentEL.on("click", ".saveBtn", saveSchedule);
 //update colors every 30 minutes
-setInterval(setToDoColors, (1000 * 60) * 30);
+setInterval(setToDoColors, (1000 * 60) * 15);
 
 
 
