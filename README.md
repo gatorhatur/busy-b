@@ -24,5 +24,5 @@ WHEN I refresh the page<br>
 THEN the saved events persist<br>
 
 # Links
-<strong>BusyB Site: </strong><a href="https://gatorhatur.github.io/busyb/">Click Here</a><br>
-<strong>BusyB GitHub Repo: </strong><a href="https://github.com/gatorhatur/busyb">Click Here</a>
+<strong>BusyB Site: </strong><a href="https://gatorhatur.github.io/busy-b/">Click Here</a><br>
+<strong>BusyB GitHub Repo: </strong><a href="https://github.com/gatorhatur/busy-b">Click Here</a>
